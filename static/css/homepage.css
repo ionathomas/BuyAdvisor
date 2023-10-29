@@ -1,0 +1,58 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.main{
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    height: 109vh;
+}
+
+.content{
+    width: 1200px;
+    height: auto;
+    margin: auto;
+    color: #fff;
+    position: relative;
+    display: flex;
+} 
+
+.content .par{
+    width: 50%;
+    padding-left: 10px;
+    padding-bottom: 25px;
+    letter-spacing: 1.2px; 
+    line-height: 30px;
+    text-align: justify;
+    font-size: 100%;
+}
+
+.content span{
+    color: orangered;
+    font-size: 21px; 
+}
+
+.btn{
+    position: relative;
+    float: right;
+    padding: 0.9%;
+    padding-right: 2%;
+}
+
+.loginBtn{
+    width: 240px;
+    height: 40px;
+    background: orangered;
+    font-size: 16px;
+    border-radius: 100px;
+    cursor: pointer;
+    color:#fff;
+    transition: 0.4s,ease;
+} 
+
+.loginBtn:hover{
+    background: black;
+    color: white;
+}

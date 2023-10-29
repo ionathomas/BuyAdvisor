@@ -1,0 +1,41 @@
+.navbar{
+    width: 100%;
+    height: 75px;
+}
+
+.icon{
+    display: inline-block;
+    height: 70px;
+    margin: 0.5%;
+    padding-left: 0.5%;
+    padding-right: 0.5%;
+    padding-bottom: 0.002%;
+    padding-top: 0.002%;
+    text-align:left;
+    cursor:pointer;
+}
+
+.logo{
+    margin: 0.5%;
+    color:orangered;
+    font-size: 200%;
+    font-family: Ariel;
+    display: inline;
+    text-align: center;
+}
+
+.tagline {
+    margin: 0.5%;
+    font-size: 80%;
+    color: #fff;
+    font-family: "Cooper Black";
+    font-style: oblique;
+}
+
+body {
+  background-image: linear-gradient(to top, rgba(0,0,0,0.5)70%,rgba(0,0,0,0.5)70%), url(../img/background.png);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

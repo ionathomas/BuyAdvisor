@@ -3,76 +3,45 @@
     padding: 0;
     font-family: sans-serif ;
 }
- .main{
+.main{
     width: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%), url(image.png);
     background-position: center;
     background-size: cover;
     height: 109vh;
 }
-.navbar{
-    width: 1200px;
-    height: 75px;
-    margin: auto;
-    text-align: center; /*EXTRA LINE FOR MAKING IT CENTER */
-}
-.icon{
-    width: 200px;
-    /* float: left; */
-    display: inline-block;
-    height: 70px;
-}
-.logo{
-    color: crimson;
-    font-size: 35px;
-    font-family: Arial;
-    padding-left: 20px;
-    /* float: left; */
-    display: inline-block;
-    padding-top: 5px; /* 10px from top */
-}
-.tagline {
-    padding-left: 50px; /* to aligin it in center with logo */
-    text-align: center; 
-    font-size: 10px; 
-    color: #fff; 
-}
+
 .hero{
-    
-    height: 100%;
     width: 100%;
-    background-image: linear-Gradient(rgba(0,0,0,0.4,),rgba(0,0,0,0.4,));
-    background-position: centre;
+    background-position: center;
     background-size: cover;
-    position:centre;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
+
 .input-group .submit-btn {
-        margin-top: 15px; 
-    }
+        margin-top: 15px;
+}
 
 .form-box{
     width: 380px;
     height: 480px;
     position: relative;
-    margin: 6% auto;
-    background:linear-gradient(to top, rgba(0,0,0,0.8)20%,rgba(0,0,0,0.8)20%);;
-    padding: 5px;
+    background:linear-gradient(to top, rgba(0,0,0,0.8)20%,rgba(0,0,0,0.8)20%);
+    padding: 9px;
     overflow: hidden;
-    padding-top: 10px;
-    
 }
+
 .button-box{
-     width: 220px;
+    width: 220px;
     margin: 35px auto;
     position: relative;
     box-shadow: 0 0 20px 9px #ff61241f;
     border-radius: 30px;
     color:#fff;
 }
+
 .toggle-button{
     padding: 10px 30px;
     cursor: pointer;
@@ -82,6 +51,7 @@
     position: relative;
     color:#fff;
 }
+
 #btn{
     top: 0;
     left: 0;
@@ -94,6 +64,7 @@
     display: flex;
     color:white;
 }
+
 .input-group{
     top: 180px;
     position: absolute;
@@ -128,21 +99,26 @@
     border-radius: 30px;
     color: white;
 }
+
 .chech-box{
     margin: 30px 10px 30px 0;
 }
+
 span{
     color: #777;
     font-size: 12px;
     bottom: 68px;
     poistion: absolute;
 }
+
 #login{
     left: 50px;
 }
+
 #register{
     left: 450px;
 }
+
 .submit-btn:hover{
 
     background: #fff;

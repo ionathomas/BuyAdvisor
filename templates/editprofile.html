@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="edit_profile.css">
+</head>
+<body>
+    <div class="main">
+        <div class="navbar">
+            <div class="icon">
+                <h2 class="logo">BuyAdvisor</h2>
+                <p class="tagline">WE ADVISE, YOU BUY!</p>
+            </div>
+        </div>
+
+        <div class="hero">
+            <div class="form-box">
+                <button type="submit" class="edit-btn">Edit Profile</button>
+                    <form id="edit-profile" class="input-group"></form>
+                    <input type="text" class="input-field" placeholder="First Name" required>
+                    <input type="text" class="input-field" placeholder="Last Name" required>
+                    <input type="password" class="input-field" placeholder="New Password">
+                    <input type="password" class="input-field" placeholder="Confirm New Password">
+                    <div class="button-container">
+                        <button type="submit" class="update-btn">Update Profile</button>
+                        <button type="button" class="cancel-btn">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var profileForm = document.getElementById("edit-profile");
+        var editButton = document.querySelector(".edit-btn");
+
+        editButton.addEventListener("click", function () {
+            profileForm.style.display = "block";
+            editButton.style.display = "none";
+        });
+
+        profileForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            // Handle the form submission here.
+        });
+    </script>
+</body>
+</html>

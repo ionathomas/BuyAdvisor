@@ -6,42 +6,14 @@
 
 .main {
     width: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.5) 50%), url(image.png);
     background-position: center;
     background-size: cover;
     height: 100vh; /* Adjusted the height */
 }
 
-.navbar {
-    width: 100%; /* Adjusted the width */
-    height: 75px;
-    text-align: center; /* Center the content */
-}
-
-.icon {
-    display: inline-block;
-    height: 70px;
-}
-
-.logo {
-    color: orangered;
-    font-size: 35px;
-    font-family: Arial;
-    padding-left: 20px;
-    display: inline-block;
-    padding-top: 5px;
-}
-
-.tagline {
-    text-align: center;
-    font-size: 14px; /* Increased the font size */
-    color: #fff;
-}
-
 .hero {
     height: 100%;
     width: 100%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
     background-position: center; /* Corrected the typo */
     background-size: cover;
     display: flex;
@@ -52,117 +24,45 @@
 
 .form-box {
     width: 380px;
-    height: 480px;
+    height: 470px;
     position: relative;
-    margin: 6% auto;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 20%, rgba(0, 0, 0, 0.8) 20%);
-    padding: 5px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8)20%,rgba(0,0,0,0.8)20%);
+    padding: 3%;
     overflow: hidden;
-    padding-top: 10px;
+    float: inherit;
 }
 
-.button-box {
-    width: 220px;
-    margin: 35px auto;
-    position: relative;
-    box-shadow: 0 0 20px 9px #ff61241f;
-    border-radius: 30px;
-    color: #fff;
-}
-
-.toggle-button {
-    padding: 10px 30px;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-    outline: none;
-    position: relative;
-    color: #fff;
-}
-
-#btn {
-    top: 0;
-    left: 0;
-    position: absolute;
-    width: 110px;
-    height: 100%;
-    background: linear-gradient(to right, #ff105f, #ff105f, #ffad06);
-    border-radius: 30px;
-    transition: 0.5s;
-    display: flex;
-    color: white;
-}
 
 .input-group {
-    top: 180px;
+    top: 100px;
     position: absolute;
-    width: 280px;
+    width: 320px;
     transition: 0.5s;
     color: white;
+    padding-left: 5%;
+    padding-top: 5%;
 }
 
 .input-field {
     width: 100%;
     padding: 10px 0;
     margin: 5px 0;
-    border: none; /* Removed individual border properties */
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
     border-bottom: 1px solid #999;
     outline: none;
     background: transparent;
-    color: #fff;
-    text-emphasis-color: white; /* Corrected typo */
+    color:#fff;
+    text-emphasis-color: white;
 }
 
-.submit-btn {
-    width: 85%;
-    padding: 10px 0;
-    cursor: pointer;
-    display: block;
-    margin: 15px auto; /* Adjusted the margin */
-    background: orangered;
-    border: 0;
-    outline: none;
-    border-radius: 30px;
-    color: white;
-}
-
-.checkbox {
-    margin: 30px 10px 30px 0;
-}
-
-span {
-    color: #777;
-    font-size: 12px;
-    bottom: 0; /* Adjusted the positioning */
-    position: absolute;
-}
-
-#login {
-    left: 50px;
-}
-
-#register {
-    left: 450px;
-}
 
 .submit-btn:hover {
     background: #fff;
     color: #fff;
 }
-/* Your existing CSS code goes here */
 
-/* Your existing CSS code goes here */
-
-.edit-btn {
-    background: orangered;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 15px;
-    display: block;
-}
 
 .update-btn, .cancel-btn {
     width: 48%; /* Adjusted button width to fit side by side */
@@ -177,16 +77,64 @@ span {
 }
 
 .update-btn {
-    background: #007BFF;
+    background: linear-gradient(to right, #ff105f, #ff105f, #ffad06);
     float: left;
 }
 
 .cancel-btn {
-    background: orangered;
+    background: linear-gradient(to right, #ff105f, #ff105f, #ffad06);
     float: right;
 }
 
-.button-container {
-    clear: both; /* Clear the floats to contain the buttons */
+.update-btn:hover .cancel-btn:hover{
+    background: #fff;
+    color: crimson;
 }
 
+
+.modal {
+    display: none; /* Hidden by default */
+    position: absolute; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding: 25%;
+    padding-top: 10%; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 50%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.edit-heading{
+    color: white;
+    text-align: center;
+    font-family: "Cooper Black";
+}

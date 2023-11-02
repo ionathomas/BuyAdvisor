@@ -1,48 +1,85 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "dashboard.html" %}
+{% block head %}
     <title>Edit Profile</title>
-    <link rel="stylesheet" href="edit_profile.css">
-</head>
-<body>
-    <div class="main">
-        <div class="navbar">
-            <div class="icon">
-                <h2 class="logo">BuyAdvisor</h2>
-                <p class="tagline">WE ADVISE, YOU BUY!</p>
-            </div>
-        </div>
-
-        <div class="hero">
-            <div class="form-box">
-                <button type="submit" class="edit-btn">Edit Profile</button>
-                    <form id="edit-profile" class="input-group"></form>
-                    <input type="text" class="input-field" placeholder="First Name" required>
-                    <input type="text" class="input-field" placeholder="Last Name" required>
-                    <input type="password" class="input-field" placeholder="New Password">
-                    <input type="password" class="input-field" placeholder="Confirm New Password">
-                    <div class="button-container">
-                        <button type="submit" class="update-btn">Update Profile</button>
-                        <button type="button" class="cancel-btn">Cancel</button>
-                    </div>
-                </form>
-            </div>
+    <link rel="stylesheet" href="../static/css/editProfile.css">
+{% endblock %}
+{% block content %}
+    <div class="hero">
+        <div class="form-box">
+            <h2 class="edit-heading">Edit Profile</h2>
+            <form id="edit-profile" class="input-group" action="/editProfile" method="post">
+                <label for="firstName">First Name</label>
+                <input type="text" class="input-field" value="{{ session['firstName'] }}" name="firstName" id="firstName" required>
+                <label for="lastName">Last Name</label>
+                <input type="text" class="input-field" value="{{ session['lastName'] }}" name="lastName" id="lastName" required>
+                <label for="userEmailId">Email</label>
+                <input type="email" class="input-field" value="{{ session['email'] }}" name="email" id="userEmailId" readonly>
+                <label for="password">Password</label>
+                <input type="password" class="input-field" placeholder="Password" name="password" id="password">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" class="input-field" placeholder="Confirm Password" name="confirm_password" id="confirm_password">
+                <div class="button-container">
+                    <button type="submit" class="update-btn">Update Profile</button>
+                    <button type="button" class="cancel-btn" onclick="location.href('/dashboard')">Cancel</button>
+                </div>
+            </form>
+            <p style="visibility: hidden; color: red; font-style: italic; text-align: center" id="messageValidation">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                      {{ messages[0] }}
+                    {% endif %}
+                {% endwith %}
+            </p>
         </div>
     </div>
 
     <script>
-        var profileForm = document.getElementById("edit-profile");
-        var editButton = document.querySelector(".edit-btn");
 
-        editButton.addEventListener("click", function () {
-            profileForm.style.display = "block";
-            editButton.style.display = "none";
-        });
+        var password = document.getElementById("password"), confirm_password = document.getElementById("confirm_password");
 
-        profileForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            // Handle the form submission here.
-        });
+        function validatePassword(){
+            if(password.value !== confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+
+        modal = document.getElementById("Modal");
+        span = document.getElementsByClassName("close")[0];
+        message = document.getElementById("messageValidation").innerHTML;
+        var flag;
+
+        if (message.includes("Error while updating the profile. Please try again later.")){
+            document.getElementById("messageValidation").style.visibility = "visible";
+            flag = 0;
+        }
+        else if (message.includes("Profile successfully updated")){
+            document.getElementById("msg").innerHTML = message;
+            modal.style.display = "block";
+            flag = 1;
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+          redirectPage();
+        }
+
+        // When the user clicks anywhere outside the modal, close it
+        window.onclick = function(event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+            redirectPage();
+          }
+        }
+
+        function redirectPage(){
+            if (flag === 1)
+                location.href = "/dashboard"
+        }
     </script>
-</body>
-</html>
+{% endblock %}

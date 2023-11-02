@@ -1,32 +1,30 @@
-*{
+* {
     margin: 0;
     padding: 0;
-    font-family: sans-serif ;
-}
-.main{
-    width: 100%;
-    background-position: center;
-    background-size: cover;
-    height: 109vh;
+    font-family: sans-serif;
 }
 
-.hero{
+.main {
     width: 100%;
     background-position: center;
     background-size: cover;
-    position: relative;
+    height: 100vh; /* Adjusted the height */
+}
+
+.hero {
+    height: 100%;
+    width: 100%;
+    background-position: center; /* Corrected the typo */
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 
-.input-group .submit-btn {
-        margin-top: 15px;
-}
-
-.form-box{
+.form-box {
     width: 380px;
-    height: 420px;
+    height: 470px;
     position: relative;
     background: linear-gradient(to top, rgba(0,0,0,0.8)20%,rgba(0,0,0,0.8)20%);
     padding: 3%;
@@ -34,50 +32,18 @@
     float: inherit;
 }
 
-.button-box{
-    width: 220px;
-    margin: 35px auto;
-    position: relative;
-    box-shadow: 0 0 20px 9px #ff61241f;
-    border-radius: 30px;
-    color:#fff;
-    text-align: center;
-}
 
-.toggle-button{
-    padding: 10px 30px;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-    outline: none;
-    position: relative;
-    color:#fff;
-}
-
-#btn{
-    top: 0;
-    left: 0;
+.input-group {
+    top: 100px;
     position: absolute;
-    width: 110px;
-    height: 100%;
-    background: linear-gradient(to right, #ff105f, #ff105f, #ffad06);
-    border-radius: 30px;
-    transition: .5s;
-    display: flex;
-    color:white;
-}
-
-.input-group{
-    top: 160px;
-    position: absolute;
-    width: 300px;
-    transition: .5s;
-    color:white;
+    width: 320px;
+    transition: 0.5s;
+    color: white;
     padding-left: 5%;
     padding-top: 5%;
 }
 
-.input-field{
+.input-field {
     width: 100%;
     padding: 10px 0;
     margin: 5px 0;
@@ -91,31 +57,40 @@
     text-emphasis-color: white;
 }
 
-.submit-btn{
-    width: 85%;
-    padding: 10px 50px;
+
+.submit-btn:hover {
+    background: #fff;
+    color: #fff;
+}
+
+
+.update-btn, .cancel-btn {
+    width: 48%; /* Adjusted button width to fit side by side */
+    padding: 10px 0;
     cursor: pointer;
     display: block;
-    margin: auto;
-    background: crimson;
+    margin: 15px 1%; /* Added a small margin between buttons */
     border: 0;
     outline: none;
     border-radius: 30px;
     color: white;
 }
 
-#login{
-    left: 50px;
+.update-btn {
+    background: linear-gradient(to right, #ff105f, #ff105f, #ffad06);
+    float: left;
 }
 
-#register{
-    left: 450px;
+.cancel-btn {
+    background: linear-gradient(to right, #ff105f, #ff105f, #ffad06);
+    float: right;
 }
 
-.submit-btn:hover{
+.update-btn:hover .cancel-btn:hover{
     background: #fff;
     color: crimson;
 }
+
 
 .modal {
     display: none; /* Hidden by default */
@@ -155,4 +130,11 @@
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+
+.edit-heading{
+    color: white;
+    text-align: center;
+    font-family: "Cooper Black";
 }

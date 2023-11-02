@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <title>Dashboard</title>
+    {% endblock %}
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+    <link rel="stylesheet" href="../static/css/logo.css">
+    <style type="text/css">
+        .content{
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="navbar">
+            <div class="icon" onclick="location.href='/dashboard'">
+               <h2 class="logo">BuyAdvisor</h2>
+                <p class="tagline">We Advise, You Buy!</p>
+            </div>
+            <div class="dropdown">
+                <button class="drop-btn" id="user">{{ session['name'] }}</button>
+                <div class="dropdown-content">
+                    <a href="/editProfile">Edit Profile</a>
+                    <!--<a href="/signOut">Log Out</a>-->
+                </div>
+            </div>
+        </div>
+        <div id="Modal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p id="msg">
+                </p>
+            </div>
+        </div>
+        <div>
+            {% block content %}
+            <h2 style="color: white; font-family: Arial">Hello {{ session.name }}!!</h2>
+            {% endblock %}
+        </div>
+    </div>
+</body>
+<script>
+    //Can add in respective pages, the messages to be displayed in the modal box
+</script>
+</html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login and Registration form</title>
-    <link rel="stylesheet" href="static/css/login.css">
-    <link rel="stylesheet" href="static/css/logo.css">
+    <title>Login</title>
+    <link rel="stylesheet" href="../static/css/login.css">
+    <link rel="stylesheet" href="../static/css/logo.css">
     
 </head>
 <body>
@@ -21,9 +21,16 @@
                         <button type="button" class="toggle-button" onclick="login()">Log In</button>
                         <button type="button" class="toggle-button" onclick="register()">Register</button>
                     </div>
-                    <form id="login" class="input-group">
-                        <input type="text" class="input-field" placeholder="Email" required>
-                        <input type="password" class="input-field" placeholder="Password"required>
+                    <p style="color: red; font-style: italic; text-align: center" id="messageValidation">
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                              {{ messages[0] }}
+                            {% endif %}
+                        {% endwith %}
+                    </p>
+                    <form id="login" class="input-group" action="/signIn" method="post">
+                        <input type="email" class="input-field" placeholder="Email" name="email" required>
+                        <input type="password" class="input-field" placeholder="Password" name="password" required>
                         <button type="submit" class="submit-btn">Log In</button>
                     </form>
                 </div>
@@ -40,7 +47,6 @@
         x.style.left = "50px";
         //y.style.left = "450px";
         z.style.left = "0";
-        z.click();
 
         function register() {
             x.style.left = "-400px";
@@ -54,7 +60,7 @@
             x.style.left = "50px";
             //y.style.left = "450px";
             z.style.left = "0";
-            location.href="/login"
+            location.href="/signIn"
         }
     </script>
 </body>

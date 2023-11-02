@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login and Registration form</title>
-    <link rel="stylesheet" href="static/css/login.css">
-    <link rel="stylesheet" href="static/css/logo.css">
+    <title>Register</title>
+    <link rel="stylesheet" href="../static/css/login.css">
+    <link rel="stylesheet" href="../static/css/logo.css">
 
 </head>
 <body>
@@ -13,7 +13,14 @@
                <h2 class="logo">BuyAdvisor</h2>
                 <p class="tagline">We Advise, You Buy!</p>
             </div>
-
+            <div id="Modal" class="modal">
+            <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p id="msg">
+                    </p>
+                </div>
+            </div>
             <div class="hero">
                 <div class="form-box">
                     <div class="button-box">
@@ -21,14 +28,23 @@
                         <button type="button" class="toggle-button" onclick="login()">Log In</button>
                         <button type="button" class="toggle-button" onclick="register()">Register</button>
                     </div>
-                    <form id="register" class="input-group">
-                        <input type="text" class="input-field" placeholder="First Name" required>
-                        <input type="text" class="input-field" placeholder="Last Name" required>
-                        <input type="email" class="input-field" placeholder="Email" required>
-                        <input type="password" class="input-field" placeholder="Password" required>
-                        <input type="password" class="input-field" placeholder="Confirm Password" required>
+                    <div>
+                        <p style="color: red; font-style: italic; text-align: center" id="messageValidation">
+                            {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                  {{ messages[0] }}
+                                {% endif %}
+                            {% endwith %}
+                        </p>
+                    </div>
+                    <form id="register" class="input-group" action="/register" method="post">
+                        <input type="text" class="input-field" placeholder="First Name" name="firstName" required>
+                        <input type="text" class="input-field" placeholder="Last Name" name="lastName" required>
+                        <input type="email" class="input-field" placeholder="Email" name="email" required>
+                        <input type="password" class="input-field" placeholder="Password" name="password" id="password" required>
+                        <input type="password" class="input-field" placeholder="Confirm Password" name="confirm_password" id="confirm_password" required>
 
-                        <button type="submit" class="submit-btn">Register</button>
+                        <button type="submit" class="submit-btn" id="register-btn">Register</button>
                     </form>
                 </div>
             </div>
@@ -41,10 +57,19 @@
         var y = document.getElementById("register");
         var z = document.getElementById("btn");
 
+        var password = document.getElementById("password"), confirm_password = document.getElementById("confirm_password");
+
+        function validatePassword(){
+            if(password.value !== confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+
         //x.style.left = "-400px";
         y.style.left = "50px";
         z.style.left = "110px";
-        z.click();
 
         function register() {
             //x.style.left = "-400px";
@@ -58,8 +83,55 @@
             //x.style.left = "50px";
             y.style.left = "450px";
             z.style.left = "0";
-            location.href="/login"
+            location.href="/signIn"
         }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+
+        var modal = document.getElementById("Modal");
+        var btn = document.getElementById("register-btn");
+        var span = document.getElementsByClassName("close")[0];
+        var flag;
+
+
+        var message = document.getElementById("messageValidation").innerHTML;
+        document.getElementById("messageValidation").style.visibility = "hidden";
+
+        if(message.includes("This email login already exists. Please register using a different email address")){
+            document.getElementById("messageValidation").style.visibility = "visible";
+            flag = 0;
+        }
+        else if(message.includes("Error while registering the account. Please try again")){
+            document.getElementById("messageValidation").style.visibility = "visible";
+            flag = 0;
+        }
+        else if(message.includes("Successfully registered. Please log in to use our services.")){
+            document.getElementById("msg").innerHTML = message;
+            document.getElementById("messageValidation").style.visibility = "hidden";
+            modal.style.display = "block";
+            flag = 1;
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+          redirectPage();
+        }
+
+        // When the user clicks anywhere outside the modal, close it
+        window.onclick = function(event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+            redirectPage();
+          }
+        }
+
+        function redirectPage(){
+            if (flag === 1)
+                location.href = "/signIn"
+        }
+
     </script>
 </body>
 </html>

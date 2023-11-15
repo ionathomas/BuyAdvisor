@@ -1,0 +1,129 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.5) 50%), url(background.png);
+    background-position: center;
+    background-size: cover;
+    height: 109vh; /* Adjusted the height */
+}
+
+.navbar{
+    width: 100%;
+    /* width: 1200px; */
+    height: 75px;
+    /* margin: auto; */
+    text-align: left; /* EXTRA LINE FOR MAKING IT CENTER */
+}
+
+.icon {
+    width: 200px; 
+    display: inline-block;
+    height: 70px;
+}
+
+.logo{
+    color:red;
+    font-size: 35px;
+    font-family: Arial;
+    padding-left: 20px;
+    display: inline-block;
+    padding-top: 5px; /* 10px from top */
+}
+
+.tagline {
+    padding-left: 30px;  /* to aligin it in center with logo */
+    text-align: center; 
+    margin: 0.5%;
+    font-size: 12px; 
+    color: #fff; 
+}
+
+.search-history{
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 20%, rgba(0, 0, 0, 0.8) 20%);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+
+
+/* .navbar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.navbar .nav-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.navbar .nav-list li {
+    display: inline;
+    margin-right: 20px;
+} */
+  
+  /* Style the search field */
+  form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left; 
+    width: 80%; 
+    background: #f1f1f1;
+  }
+  
+  /* Style the submit button */
+  form.example button {
+    float: left;
+    width: 17%; 
+    padding: 10px;
+    background: red;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: B; /* Prevent double borders */
+    cursor: pointer;
+  }
+  
+  form.example button:hover {
+    background: grey;
+  }
+  
+  
+  form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+.search-history {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #fff;
+    padding: 10px;
+    text-align:center;
+    font-weight: bold;
+}
+
+th {
+    background-color: black;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(161, 5, 161);
+}

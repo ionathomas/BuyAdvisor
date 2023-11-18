@@ -20,7 +20,7 @@
                 <input type="password" class="input-field" placeholder="Confirm Password" name="confirm_password" id="confirm_password">
                 <div class="button-container">
                     <button type="submit" class="update-btn">Update Profile</button>
-                    <button type="button" class="cancel-btn" onclick="location.href('/dashboard')">Cancel</button>
+                    <button type="button" class="cancel-btn" onclick="location.href='/dashboard'">Cancel</button>
                 </div>
             </form>
             <p style="visibility: hidden; color: red; font-style: italic; text-align: center" id="messageValidation">
@@ -54,7 +54,8 @@
         var flag;
 
         if (message.includes("Error while updating the profile. Please try again later.")){
-            document.getElementById("messageValidation").style.visibility = "visible";
+            document.getElementById("msg").innerHTML = message;
+            modal.style.display = "block";
             flag = 0;
         }
         else if (message.includes("Profile successfully updated")){
@@ -80,6 +81,8 @@
         function redirectPage(){
             if (flag === 1)
                 location.href = "/dashboard"
+            else if (flag === 0)
+                location.href = "/editProfile"
         }
     </script>
 {% endblock %}

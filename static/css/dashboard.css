@@ -34,33 +34,19 @@
     font-size: 21px;
 }
 
-.drop-btn {
-    margin: auto;
-    padding: 3%;
-    font-size: 16px;
-    border: none;
-    min-width: 160px;
-    height: 40px;
-    background: orangered;
-    border-radius: 100px;
-    cursor: pointer;
-    color:#fff;
-    transition: 0.4s,ease;
-}
-
 .dropdown {
     position: relative;
     display: inline-block;
     float:right;
     padding: 0.9%;
-    padding-right: 2%;
+    padding-right: 4%;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 160px;
+    min-width: 140px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
@@ -83,4 +69,28 @@
     background-color: black;
     color: white;
 }
+
+.w3-xlarge fa fa-user{
+    float: right;
+    color: white;
+    margin: auto;
+}
+
+#user {
+    padding-left: 50%;
+}
+
+#home{
+    float: right;
+    text-align: center;
+    padding-right: 2%;
+    padding-top: 0.9%;
+
+}
+
+#nameOfUser {
+    color: white;
+    font-family: "Bookman Old Style";
+}
+
 

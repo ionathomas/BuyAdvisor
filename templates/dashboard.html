@@ -6,6 +6,9 @@
     {% endblock %}
     <link rel="stylesheet" href="../static/css/dashboard.css">
     <link rel="stylesheet" href="../static/css/logo.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style type="text/css">
         .content{
             float: left;
@@ -20,26 +23,26 @@
                 <p class="tagline">We Advise, You Buy!</p>
             </div>
             <div class="dropdown">
-                <button class="drop-btn" id="user">{{ session['name'] }}</button>
+                <i class='w3-xlarge fa fa-user' id="user" style="color:white"></i>
+                <p id="nameOfUser">{{ session['name'] }}</p>
                 <div class="dropdown-content">
                     <a href="/editProfile">Edit Profile</a>
-                    <!--<a href="/signOut">Log Out</a>-->
+                    <a href="/searchHistory">Search History</a>
+                    <a href="/signOut">Log Out</a>
                 </div>
             </div>
+            <a id="home" href="/dashboard" style=""><i class="fa fa-home" style="font-size:36px;color:white"></i></a>
         </div>
         <div id="Modal" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <p id="msg">
-                </p>
+                <span class="close" id="closeModal2">&times;</span>
+                <i class="material-icons" style="font-size:36px;" id="error_icon">error_outline</i><p id="msg"></p>
             </div>
         </div>
-        <div>
-            {% block content %}
-            <h2 style="color: white; font-family: Arial">Hello {{ session.name }}!!</h2>
-            {% endblock %}
-        </div>
+        {% block content %}
+        <h2 style="color: white; font-family: Arial">Hello {{ session.name }}!!</h2>
+        {% endblock %}
     </div>
 </body>
 <script>

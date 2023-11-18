@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.search-history{
+    background: linear-gradient(to top, rgba(0,0,0,0.8)20%,rgba(0,0,0,0.8)20%);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+  
+  /* Style the search field */
+  form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left; 
+    width: 80%; 
+    background: #f1f1f1;
+  }
+  
+  /* Style the submit button */
+  form.example button {
+    float: left;
+    width: 17%; 
+    padding: 10px;
+    background: red;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: B; /* Prevent double borders */
+    cursor: pointer;
+  }
+  
+  form.example button:hover {
+    background: grey;
+  }
+  
+  
+  form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+.search-history {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+#searchHistory {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#searchHistory thead {
+    background: linear-gradient(to right, #ff105f, #ff105f, #ffad06);
+}
+
+#searchHistory th, #searchHistory td, #searchHistory tr {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align:center;
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(161, 5, 161);
+}
+
+#searchHistoryHeading {
+    color: white;
+    text-align: center;
+    font-family: "Cooper Black";
+}

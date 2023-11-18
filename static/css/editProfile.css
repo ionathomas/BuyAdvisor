@@ -23,8 +23,8 @@
 }
 
 .form-box {
-    width: 380px;
-    height: 470px;
+    width: 420px;
+    height: 580px;
     position: relative;
     background: linear-gradient(to top, rgba(0,0,0,0.8)20%,rgba(0,0,0,0.8)20%);
     padding: 3%;
@@ -34,13 +34,12 @@
 
 
 .input-group {
-    top: 100px;
     position: absolute;
     width: 320px;
     transition: 0.5s;
     color: white;
     padding-left: 5%;
-    padding-top: 5%;
+    padding-top: 2%;
 }
 
 .input-field {
@@ -91,7 +90,7 @@
     color: crimson;
 }
 
-
+/* MODAL BOX CSS */
 .modal {
     display: none; /* Hidden by default */
     position: absolute; /* Stay in place */
@@ -100,7 +99,7 @@
     padding-top: 10%; /* Location of the box */
     left: 0;
     top: 0;
-    width: 50%; /* Full width */
+    width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */

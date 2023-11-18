@@ -1,0 +1,63 @@
+{% extends "dashboard.html" %}
+{% block head %}
+    <title>Search History</title>
+    <link rel="stylesheet" href="../static/css/searchHistory.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+{% endblock %}
+{% block content %}
+    <!-- Search History Table -->
+    <div class="search-history">
+        <h2 id="searchHistoryHeading">Search History</h2>
+        <!--
+        <div class="boxcontainer">
+            <form class="example" action="action_page.php">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+              </form>
+        </div>
+        -->
+        <table id="searchHistory">
+            <thead>
+                <tr>
+                    <th style="text-align:center;">Product Name</th>
+                    <th style="text-align:center;">Score</th>
+                    <th style="text-align:center;">Product URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Product A</td>
+                    <td class="positive">60% Positive</td>
+                    <td><a href="#" target="_blank"><i class="glyphicon glyphicon-link" style="font-size:24px;color:white;"></i></a></td>
+                </tr>
+                <tr>
+                    <td>Product B</td>
+                    <td class="negative">60% Negative</td>
+                    <td><a href="#" target="_blank"><i class="glyphicon glyphicon-link" style="font-size:24px;color:white;"></i></a></td>
+                </tr>
+                <tr>
+                    <td>Product C</td>
+                    <td class="negative">70% Positive</td>
+                    <td><a href="#" target="_blank"><i class="glyphicon glyphicon-link" style="font-size:24px;color:white;"></i></a></td>
+                </tr>
+                <tr>
+                    <td>Product D</td>
+                    <td class="neutral">Neutral</td>
+                    <td><a href="#" target="_blank"><i class="glyphicon glyphicon-link" style="font-size:24px;color:white;"></i></a></td>
+                </tr>
+                <tr>
+                    <td>Product E</td>
+                    <td class="negative">60% Negative</td>
+                    <td><a href="#" target="_blank"><i class="glyphicon glyphicon-link" style="font-size:24px;color:white;"></i></a></td>
+                </tr>
+                <tr>
+                    <td>Product F</td>
+                    <td class="negative">50% Negative</td>
+                    <td><a href="#" target="_blank"><i class="glyphicon glyphicon-link" style="font-size:24px;color:white;"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

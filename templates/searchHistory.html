@@ -7,57 +7,105 @@
 {% endblock %}
 {% block content %}
     <!-- Search History Table -->
-    <div class="search-history">
+    <div class="search-history" id="searchHistoryDiv">
         <h2 id="searchHistoryHeading">Search History</h2>
-        <!--
-        <div class="boxcontainer">
-            <form class="example" action="action_page.php">
-                <input type="text" placeholder="Search.." name="search">
-                <button type="submit"><i class="fa fa-search"></i></button>
-              </form>
-        </div>
-        -->
+        <p style="color: red; font-style: italic; text-align: center; visibility: hidden" id="messageValidation">
+            {% with messages = get_flashed_messages(category_filter=["Error"]) %}
+                {% if messages %}
+                  {{ messages[0] }}
+                {% endif %}
+            {% endwith %}
+        </p>
         <table id="searchHistory">
             <thead>
                 <tr>
-                    <th style="text-align:center;">Product Name</th>
-                    <th style="text-align:center;">Score</th>
-                    <th style="text-align:center;">Product URL</th>
+                    <th style="text-align:center;">ASIN</th>
+                    <th style="text-align:center;">Review</th>
+                    <th style="text-align:center;">Description</th>
+                    <th style="text-align:center;">URL</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Product A</td>
-                    <td class="positive">60% Positive</td>
-                    <td><a href="#" target="_blank"><i class="glyphicon glyphicon-link" style="font-size:24px;color:white;"></i></a></td>
-                </tr>
-                <tr>
-                    <td>Product B</td>
-                    <td class="negative">60% Negative</td>
-                    <td><a href="#" target="_blank"><i class="glyphicon glyphicon-link" style="font-size:24px;color:white;"></i></a></td>
-                </tr>
-                <tr>
-                    <td>Product C</td>
-                    <td class="negative">70% Positive</td>
-                    <td><a href="#" target="_blank"><i class="glyphicon glyphicon-link" style="font-size:24px;color:white;"></i></a></td>
-                </tr>
-                <tr>
-                    <td>Product D</td>
-                    <td class="neutral">Neutral</td>
-                    <td><a href="#" target="_blank"><i class="glyphicon glyphicon-link" style="font-size:24px;color:white;"></i></a></td>
-                </tr>
-                <tr>
-                    <td>Product E</td>
-                    <td class="negative">60% Negative</td>
-                    <td><a href="#" target="_blank"><i class="glyphicon glyphicon-link" style="font-size:24px;color:white;"></i></a></td>
-                </tr>
-                <tr>
-                    <td>Product F</td>
-                    <td class="negative">50% Negative</td>
-                    <td><a href="#" target="_blank"><i class="glyphicon glyphicon-link" style="font-size:24px;color:white;"></i></a></td>
-                </tr>
+            <tbody id="tableBody">
             </tbody>
         </table>
     </div>
+    <div>
+        <p id="tableContents" style="visibility: hidden">
+            {% with messages = get_flashed_messages(category_filter=["Info"]) %}
+                {% if messages %}
+                    {%- for msg in messages %}
+                        {{ msg }}
+                    {% endfor -%}
+                {% endif %}
+            {% endwith %}
+        </p>
+    </div>
+    <script>
+        var modal = document.getElementById("Modal");
+        var modal3 = document.getElementById("Modal3");
+        var span1 = document.getElementsByClassName("close")[0];
+        var span2 = document.getElementsByClassName("close")[1];
+        var span3 = document.getElementsByClassName("close")[2];
+        var flag = 0;
+        document.getElementById("messageValidation").style.visibility = "hidden";
+
+        // When the user clicks on <span> (x), close the modal
+        span1.onclick = function() {
+          modal.style.display = "none";
+          redirectPage();
+        }
+
+        span3.onclick = function() {
+          modal3.style.display = "none";
+          redirectPage();
+        }
+
+        // When the user clicks anywhere outside the modal, close it
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+                redirectPage();
+            }
+            else if (event.target === modal3) {
+                modal3.style.display = "none";
+                redirectPage();
+            }
+        }
+
+        var message = document.getElementById("messageValidation").innerHTML;
+        var message2 = document.getElementById("tableContents").innerHTML;
+
+        if(message.includes("No Recent Searches")){
+            document.getElementById("msg").innerHTML = message+"...";
+            document.getElementById("msg").style.color = "darkgreen";
+            document.getElementById("error_icon").style.color = "darkgreen";
+            document.getElementById("searchHistoryDiv").style.display = "none";
+            modal.style.display = "block";
+            flag = 1;
+        }
+
+        if(message2.includes("https://")){
+            var len = message2.length;
+            message2 = message2.substring(1,len-1);
+            message2 = message2.replaceAll("&lt;","<");
+            message2 = message2.replaceAll("&gt;",">");
+            message2 = message2.replaceAll("&quote;","\"");
+            document.getElementById("tableBody").innerHTML = message2;
+            flag = 0;
+        }
+
+        function redirectPage(){
+            if (flag === 1)
+                location.href = "/dashboard"
+        }
+
+        function displayModal(message){
+            document.getElementById("msg3").innerHTML = message;
+            document.getElementById("msg3").style.color = "maroon";
+            modal3.style.display = "block";
+            flag = 0;
+        }
+
+    </script>
 
 {% endblock %}

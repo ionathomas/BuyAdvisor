@@ -11,18 +11,18 @@ body {
     text-align: center;
 }
   
-  /* Style the search field */
-  form.example input[type=text] {
+/* Style the search field */
+form.example input[type=text] {
     padding: 10px;
     font-size: 17px;
     border: 1px solid grey;
     float: left; 
     width: 80%; 
     background: #f1f1f1;
-  }
+}
   
-  /* Style the submit button */
-  form.example button {
+/* Style the submit button */
+form.example button {
     float: left;
     width: 17%; 
     padding: 10px;
@@ -32,18 +32,18 @@ body {
     border: 1px solid grey;
     border-left: B; /* Prevent double borders */
     cursor: pointer;
-  }
+}
   
-  form.example button:hover {
+form.example button:hover {
     background: grey;
-  }
+}
   
   
-  form.example::after {
+form.example::after {
     content: "";
     clear: both;
     display: table;
-  }
+}
 
 .search-history {
     max-width: 800px;
@@ -76,4 +76,51 @@ a {
     color: white;
     text-align: center;
     font-family: "Cooper Black";
+}
+
+#tableBody {
+    color: white;
+    text-align: center;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+
+/* MODAL BOX CSS */
+.modal {
+    display: none; /* Hidden by default */
+    position: absolute; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding: 25%;
+    padding-top: 10%; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    padding-left: 10%;
+}
+
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }

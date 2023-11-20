@@ -1,7 +1,7 @@
 import pymysql
 from flask import Flask, render_template, request, redirect, session
 from flask_session import Session
-from Controller import mainController, userController, dbController
+from Controller import mainController, userController, dbController, reviewProductController
 from password_hashing import encrypt, decrypt
 
 app = Flask(__name__)
@@ -50,7 +50,7 @@ def register():
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    return reviewProduct()
 
 
 @app.route("/signOut")
@@ -64,6 +64,18 @@ def editProfile():
     userController.editProfile(request)
     return render_template("editProfile.html")
 
+@app.route("/searchHistory", methods=['GET','POST'])
+def searchHistory():
+    userController.searchHistory()
+    return render_template("searchHistory.html")
+
+@app.route("/reviewProduct", methods=['GET','POST'])
+def reviewProduct():
+    url = request.values.get('url')
+    if url:
+        print(url)
+        reviewProductController.reviewProduct(url)
+    return render_template("reviewProduct.html")
 
 @app.after_request
 def add_header(response):

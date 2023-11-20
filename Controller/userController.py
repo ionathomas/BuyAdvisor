@@ -50,3 +50,32 @@ def editProfile(request):
             flash(message, 'Error')
     return redirect(url_for("editProfile"))
 
+
+def searchHistory():
+    query = "SELECT DISTINCT ASIN FROM productsearchlogs WHERE email = '" + session['email'] + "' order by dateSearched DESC;"
+    result = list(dbController.getRecords(query))
+    print(result)
+    if len(result) > 0:
+        for asin in result:
+            query = "SELECT * FROM analyseproductscores WHERE ASIN = '" + asin[0] + "'"
+            result2 = dbController.getRecords(query)
+            if result2:
+                scoreValue = result2[0][3]
+                scorePercentage = result2[0][4]
+                description = result2[0][6]
+                message = '<tr><td>'+asin[0]+'</td>'
+                if 'NEUTRAL' in scoreValue:
+                    message += '<td>The analysis was found to be non-conclusive. Let your instincts take the wheel on this one</td>'
+                else:
+                    message += '<td>The product was found to be '+str(scorePercentage)+'% '+scoreValue+'</td>'
+                message += '<td><a onclick="displayModal(\''+description+'\')"><i class="fa fa-edit" style="font-size:36px"></i></a></td>'
+                message += '<td><a onclick="displayModal(\'https://www.amazon.com/dp/'+asin[0]+'\')"><i class="fa fa-link" style="font-size:36px"></i></a></td>'
+                message += '</tr>'
+                print(message)
+                flash(message, "Info")
+    else:
+        # No Search Results
+        print("No Recent Searches")
+        message = "No Recent Searches"
+        flash(message, "Error")
+    return redirect(url_for("searchHistory"))

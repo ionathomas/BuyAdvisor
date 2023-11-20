@@ -38,8 +38,7 @@ def scrapReviews(asin):
     }
 
     flag = 0
-    # CHANGE RANGE TO 6 to include 5th page
-    for num in range(1, 2):
+    for num in range(1, 6):
         querystring = {"asin": asin, "country": "US", "sort_by": "MOST_RECENT", "verified_purchases_only": "false",
                        "images_or_videos_only": "false", "page": num, "page_size": "10"}
         response = requests.get(url, headers=headers, params=querystring)

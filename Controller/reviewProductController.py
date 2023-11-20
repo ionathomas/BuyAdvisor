@@ -96,12 +96,12 @@ def analyzeReviews(reviews):
             highScorePosition = 'POS'
         case 1:
             highScorePosition = 'NEG'
-    highScore = maxScore / len(reviews)
+    highScore = round((maxScore / len(reviews)) * 100, 2)
     score['POS'] /= len(reviews)
     score['POS'] *= 100
-    score['NEG'] /= len(reviews)
-    score['NEG'] *= 100
-    return [highScorePosition, highScore * 100, len(reviews), [score['POS'], score['NEG']]]
+    score['POS'] = round(score['POS'],2)
+    score['NEG'] = 100 - score['POS']
+    return [highScorePosition, highScore, len(reviews), [score['POS'], score['NEG']]]
 
 def scoreListCheck(scores):
     scoreList = list(dict.fromkeys(scores))

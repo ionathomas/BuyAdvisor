@@ -142,11 +142,12 @@
             var id = setInterval(frame, 10);
             function frame() {
                 if (width >= maxWidth) {
-                  clearInterval(id);
+                    elem.innerHTML = maxWidth  + '% Negative';
+                    clearInterval(id);
                 } else {
-                  width++;
-                  elem.style.width = width + '%';
-                  elem.innerHTML = width * 1  + '% Positive';
+                    width++;
+                    elem.style.width = width + '%';
+                    elem.innerHTML = width * 1  + '% Positive';
                 }
             }
         }
@@ -157,11 +158,12 @@
             var id = setInterval(frame, 10);
             function frame() {
                 if (width >= maxWidth) {
-                  clearInterval(id);
+                    elem.innerHTML = maxWidth  + '% Negative';
+                    clearInterval(id);
                 } else {
-                  width++;
-                  elem.style.width = width + '%';
-                  elem.innerHTML = width * 1  + '% Negative';
+                    width++;
+                    elem.style.width = width + '%';
+                    elem.innerHTML = width * 1  + '% Negative';
                 }
             }
         }

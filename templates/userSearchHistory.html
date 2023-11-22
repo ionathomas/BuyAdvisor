@@ -1,7 +1,7 @@
-{% extends "dashboard.html" %}
+{% extends "adminDashboard.html" %}
 {% block head %}
     <title>Search History</title>
-    <link rel="stylesheet" href="../static/css/searchHistory.css">
+    <link rel="stylesheet" href="../static/css/userSearchHistory.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 {% endblock %}
@@ -43,10 +43,10 @@
     <input type="text" id="urlCopy" hidden>
     <script>
         var modal = document.getElementById("Modal");
-        var modal3 = document.getElementById("Modal3");
+        var modal4 = document.getElementById("Modal4");
         var span1 = document.getElementsByClassName("close")[0];
         var span2 = document.getElementsByClassName("close")[1];
-        var span3 = document.getElementsByClassName("close")[2];
+        var span4 = document.getElementsByClassName("close")[3];
         var flag = 0;
         document.getElementById("messageValidation").style.visibility = "hidden";
 
@@ -56,8 +56,8 @@
           redirectPage();
         }
 
-        span3.onclick = function() {
-          modal3.style.display = "none";
+        span4.onclick = function() {
+          modal4.style.display = "none";
           redirectPage();
         }
 
@@ -67,8 +67,8 @@
                 modal.style.display = "none";
                 redirectPage();
             }
-            else if (event.target === modal3) {
-                modal3.style.display = "none";
+            else if (event.target === modal4) {
+                modal4.style.display = "none";
                 redirectPage();
             }
         }
@@ -97,7 +97,7 @@
 
         function redirectPage(){
             if (flag === 1)
-                location.href = "/dashboard"
+                location.href = "/adminDashboard"
         }
 
         function displayModal(message){
@@ -105,19 +105,19 @@
                 document.getElementById("displayClipboard").style.visibility = "visible";
                 document.getElementById("copiedMsg").style.visibility = "hidden";
             }
-            else{
+            else {
                 document.getElementById("displayClipboard").style.visibility = "hidden";
                 document.getElementById("copiedMsg").style.visibility = "hidden";
             }
-            document.getElementById("msg3").innerHTML = message;
-            document.getElementById("msg3").style.color = "maroon";
-            modal3.style.display = "block";
+            document.getElementById("msg4").innerHTML = message;
+            document.getElementById("msg4").style.color = "maroon";
+            modal4.style.display = "block";
             flag = 0;
         }
 
         function copyToClipboard(){
 
-            var copyText = document.getElementById("msg3").innerHTML;
+            var copyText = document.getElementById("msg4").innerHTML;
             var elem = document.getElementById("urlCopy");
             elem.value = copyText;
             elem.select();
@@ -129,10 +129,9 @@
             document.getElementById("displayClipboard").style.visibility = "hidden";
             document.getElementById("copiedMsg").style.visibility = "visible";
             setTimeout(function(){
-                modal3.style.display = "none";
+                modal4.style.display = "none";
                 redirectPage();
             },1500);
-
         }
 
     </script>

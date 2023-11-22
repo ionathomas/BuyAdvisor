@@ -9,10 +9,7 @@
 <body>
     <div class="main">
         <div class="navbar">
-            <div class="icon" onclick="location.href='/'">
-               <h2 class="logo">BuyAdvisor</h2>
-                <p class="tagline">We Advise, You Buy!</p>
-            </div>
+            <img id="icon" src="../static/img/Icon.png" onclick="location.href='/'" alt="Logo">
             <div id="Modal" class="modal">
             <!-- Modal content -->
                 <div class="modal-content">
@@ -101,16 +98,25 @@
         if(message.includes("This email login already exists. Please register using a different email address")){
             document.getElementById("messageValidation").style.visibility = "visible";
             flag = 0;
+            setTimeout(function(){
+                redirectPage();
+            },2000);
         }
         else if(message.includes("Error while registering the account. Please try again")){
             document.getElementById("messageValidation").style.visibility = "visible";
             flag = 0;
+            setTimeout(function(){
+                redirectPage();
+            },2000);
         }
         else if(message.includes("Successfully registered. Please log in to use our services.")){
             document.getElementById("msg").innerHTML = message;
             document.getElementById("messageValidation").style.visibility = "hidden";
             modal.style.display = "block";
             flag = 1;
+            setTimeout(function(){
+                redirectPage();
+            },2000);
         }
 
         // When the user clicks on <span> (x), close the modal

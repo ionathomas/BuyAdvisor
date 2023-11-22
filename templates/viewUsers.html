@@ -1,0 +1,146 @@
+{% extends "adminDashboard.html" %}
+{% block head %}
+    <link rel="stylesheet" href="../static/css/viewUsers.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+{% endblock %}
+{% block content %}
+    <div class="view-users" id="viewUserDiv">
+        <h2 id="viewUsersHeading">Users Registered to our Services</h2>
+        <table id="viewUser">
+            <thead>
+                <tr>
+                    <th style="text-align:center;">Full Name</th>
+                    <th style="text-align:center;">Email</th>
+                    <th style="text-align:center;">Edit</th>
+                    <th style="text-align:center;">Delete</th>
+                    <th style="text-align:center;">Search History</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <p id="tableContents" style="visibility: hidden">
+            {% with messages = get_flashed_messages(category_filter=["Info"]) %}
+                {% if messages %}
+                    {%- for msg in messages %}
+                        {{ msg }}
+                    {% endfor -%}
+                {% endif %}
+            {% endwith %}
+        </p>
+    </div>
+    <p style="color: red; font-style: italic; text-align: center; visibility: hidden" id="messageValidation">
+        {% with messages = get_flashed_messages(category_filter=["Error"]) %}
+            {% if messages %}
+              {{ messages[0] }}
+            {% endif %}
+        {% endwith %}
+    </p>
+    <form id="UserEmailForm">
+        <input type="hidden" name="email" id="userEmail">
+    </form>
+    <script>
+        var modal = document.getElementById("Modal");
+        var modal3 = document.getElementById("Modal3");
+        var span1 = document.getElementsByClassName("close")[0];
+        var span3 = document.getElementsByClassName("close")[2];
+        var flag = 0;
+        document.getElementById("messageValidation").style.visibility = "hidden";
+
+        // When the user clicks on <span> (x), close the modal
+        span1.onclick = function() {
+          modal.style.display = "none";
+          document.getElementById("viewUserDiv").style.display = "block";
+          redirectPage();
+        }
+
+        span3.onclick = function() {
+          modal3.style.display = "none";
+          document.getElementById("viewUserDiv").style.display = "block";
+          redirectPage();
+        }
+
+        // When the user clicks anywhere outside the modal, close it
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+                document.getElementById("viewUserDiv").style.display = "block";
+                redirectPage();
+            }
+            else if (event.target === modal3) {
+                modal3.style.display = "none";
+                document.getElementById("viewUserDiv").style.display = "block";
+                redirectPage();
+            }
+        }
+
+        var message = document.getElementById("messageValidation").innerHTML;
+        var message2 = document.getElementById("tableContents").innerHTML;
+
+        if(message.includes("No Registered Users")){
+            document.getElementById("msg").innerHTML = message+"...";
+            document.getElementById("msg").style.color = "darkgreen";
+            document.getElementById("error_icon").style.color = "darkgreen";
+            document.getElementById("viewUserDiv").style.display = "none";
+            modal.style.display = "block";
+            flag = 1;
+        }
+        else if(message.includes("Record Successfully Deleted")){
+            document.getElementById("msg").innerHTML = message;
+            document.getElementById("msg").style.color = "darkgreen";
+            document.getElementById("error_icon").style.color = "darkgreen";
+            document.getElementById("viewUserDiv").style.display = "none";
+            modal.style.display = "block";
+            setTimeout(function(){
+                modal.style.display = "none";
+                document.getElementById("viewUserDiv").style.display = "block";
+                redirectPage();
+            },2000);
+            flag = 1;
+        }
+
+        if(message2.includes("fa fa-edit")){
+            var len = message2.length;
+            message2 = message2.substring(1,len-1);
+            message2 = message2.replaceAll("&lt;","<");
+            message2 = message2.replaceAll("&gt;",">");
+            message2 = message2.replaceAll("&quote;","\"");
+            document.getElementById("tableBody").innerHTML = message2;
+            flag = 0;
+        }
+
+        function redirectPage(){
+            if (flag === 1)
+                location.href = "/adminDashboard"
+        }
+
+        function deleteUser(email){
+            document.getElementById("userEmail").value = email;
+            document.getElementById("UserEmailForm").action = "/deleteUser";
+            document.getElementById("UserEmailForm").method = "post";
+            modal3.style.display = "block";
+        }
+
+        function confirmDeleteUser(){
+            document.getElementById("UserEmailForm").submit();
+        }
+
+        function editEmail(email){
+            document.getElementById("userEmail").value = email;
+            document.getElementById("UserEmailForm").action = "/editEmail";
+            document.getElementById("UserEmailForm").method = "get";
+            document.getElementById("UserEmailForm").submit();
+        }
+
+        function userSearchHistory(email){
+            document.getElementById("userEmail").value = email;
+            document.getElementById("UserEmailForm").action = "/userSearchHistory";
+            document.getElementById("UserEmailForm").method = "post";
+            document.getElementById("UserEmailForm").submit();
+        }
+    </script>
+
+{% endblock %}

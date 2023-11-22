@@ -1,0 +1,80 @@
+{% extends "adminDashboard.html" %}
+{% block head %}
+    <title>Edit User</title>
+    <link rel="stylesheet" href="../static/css/editEmail.css">
+{% endblock %}
+{% block content %}
+    <div class="hero">
+        <div class="form-box">
+            <h2 class="edit-heading">Edit User</h2>
+            <form id="edit-profile" class="input-group" action="/editEmail" method="post">
+                <label for="firstName">First Name</label>
+                <i class="fa fa-lock icon" id="lockIcon"></i><input type="text" class="input-field" name="firstName" id="firstName" style="color:darkgrey;" disabled>
+                <label for="lastName">Last Name</label>
+                <i class="fa fa-lock icon" id="lockIcon"></i><input type="text" class="input-field" name="lastName" id="lastName" style="color:darkgrey;" disabled>
+                <label for="userEmailId">Email</label>
+                <input type="email" class="input-field" name="userEmailId" id="userEmailId">
+                <input type="hidden" id="originalEmail" name="originalEmail">
+                <div class="button-container">
+                    <button type="submit" class="update-btn">Update Email</button>
+                    <button type="button" class="cancel-btn" onclick="location.href='/adminDashboard'">Cancel</button>
+                </div>
+            </form>
+            <p style="visibility: hidden; color: red; font-style: italic; text-align: center" id="messageValidation">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                      {{ messages[0] }}
+                    {% endif %}
+                {% endwith %}
+            </p>
+        </div>
+    </div>
+
+    <script>
+
+        modal = document.getElementById("Modal");
+        span = document.getElementsByClassName("close")[0];
+        message = document.getElementById("messageValidation").innerHTML;
+        var flag;
+
+        if (message.includes("|")){
+            var arr = message.split("|");
+            document.getElementById("firstName").value = arr[0].trim();
+            document.getElementById("lastName").value = arr[1].trim();
+            document.getElementById("userEmailId").value = arr[2].trim();
+            document.getElementById("originalEmail").value = arr[2].trim();
+        }
+        else if (message.includes("Error while updating email. Please try again later.")){
+            document.getElementById("msg").innerHTML = message;
+            modal.style.display = "block";
+            flag = 0;
+        }
+        else if (message.includes("Email successfully updated")){
+            document.getElementById("msg").innerHTML = message;
+            modal.style.display = "block";
+            flag = 1;
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+          redirectPage();
+        }
+
+        // When the user clicks anywhere outside the modal, close it
+        window.onclick = function(event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+            redirectPage();
+          }
+        }
+
+        function redirectPage(){
+            if (flag === 1)
+                location.href = "/adminDashboard"
+            else if (flag === 0)
+                location.href = "/editEmail"
+        }
+
+    </script>
+{% endblock %}

@@ -10,35 +10,9 @@
     height: 109vh;
 }
 
-.content{
-    width: 1200px;
-    height: auto;
-    margin: auto;
-    color: #fff;
-    position: relative;
-    display: flex;
-}
-
-.content .par{
-    width: 50%;
-    padding-left: 10px;
-    padding-bottom: 25px;
-    letter-spacing: 1.2px;
-    line-height: 30px;
-    text-align: justify;
-    font-size: 100%;
-}
-
-.content span{
-    color: orangered;
-    font-size: 21px;
-}
-
 .dropdown {
-    position: relative;
-    display: inline-block;
     float:right;
-    padding: 0.9%;
+    padding-top: 1%;
     padding-right: 5%;
 }
 
@@ -77,7 +51,7 @@
 }
 
 #user {
-    padding-left: 50%;
+    padding-left: 40%;
 }
 
 #home{

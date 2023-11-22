@@ -9,21 +9,24 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style type="text/css">
+        .content{
+            float: left;
+        }
+    </style>
 </head>
 <body>
     <div class="main">
         <div class="navigationBar">
-            <img id="icon" src="../static/img/Icon.png" onclick="location.href='/dashboard'" alt="Logo">
+            <img id="icon" src="../static/img/Icon.png" onclick="location.href='/adminDashboard'" alt="Logo">
             <div class="dropdown">
                 <i class='w3-xlarge fa fa-user' id="user" style="color:white"></i>
-                <p id="nameOfUser">{{ session['name'] }}</p>
+                <p id="nameOfUser">Administrator</p>
                 <div class="dropdown-content">
-                    <a href="/editProfile">Edit Profile</a>
-                    <a href="/searchHistory">Search History</a>
                     <a href="/signOut">Log Out</a>
                 </div>
             </div>
-            <a id="home" href="/dashboard" style=""><i class="fa fa-home" style="font-size:36px;color:white"></i></a>
+            <a id="home" href="/adminDashboard" style=""><i class="fa fa-home" style="font-size:36px;color:white"></i></a>
         </div>
         <div id="Modal" class="modal">
             <!-- Modal content -->
@@ -44,23 +47,32 @@
                 <br>
             </div>
         </div>
-        <!-- Modal block for Search History -->
+        <!-- Modal block for Deleting User -->
         <div id="Modal3" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
                 <span class="close" id="closeModal3">&times;</span>
+                <i class="material-icons" style="font-size:36px;" id="error_icon">error_outline</i><p id="msg" style="font-weight: bold">Are you sure you want to delete user?</p>
+                <button type="button" class="confirm-btn" onclick="confirmDeleteUser()">Yes</button>
+                <button type="button" class="cancel-btn" onclick="location.href='/adminDashboard'">No</button>
                 <br>
-                <p id="msg3" style="font-weight: bold"></p>
+            </div>
+        </div>
+        <!-- Modal Block for Search History -->
+        <div id="Modal4" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close" id="closeModal4">&times;</span>
+                <br>
+                <p id="msg4" style="font-weight: bold"></p>
                 <br>
                 <a onclick="copyToClipboard()"><i class="w3-xlarge w3-display-bottommiddle fa fa-clipboard" id="displayClipboard" style="visibility: hidden; padding-bottom: 3%;"></i></a>
                 <p id="copiedMsg" style="text-align: center; visibility: hidden">Copied to Clipboard!</p>
             </div>
         </div>
-        <div>
-            {% block content %}
-            <h2 style="color: white; font-family: Arial">Hello {{ session.name }}!!</h2>
-            {% endblock %}
-        </div>
+        {% block content %}
+        <h2 style="color: white; font-family: Arial">Hello {{ session.email }}!!</h2>
+        {% endblock %}
     </div>
 </body>
 <script>

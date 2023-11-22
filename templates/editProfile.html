@@ -13,7 +13,7 @@
                 <label for="lastName">Last Name</label>
                 <input type="text" class="input-field" value="{{ session['lastName'] }}" name="lastName" id="lastName" required>
                 <label for="userEmailId">Email</label>
-                <input type="email" class="input-field" value="{{ session['email'] }}" name="email" id="userEmailId" readonly>
+                <i class="fa fa-lock icon" id="lockIcon"></i><input type="email" class="input-field" style="color:darkgrey;" value="{{ session['email'] }}" name="email" id="userEmailId" disabled>
                 <label for="password">Password</label>
                 <input type="password" class="input-field" placeholder="Password" name="password" id="password">
                 <label for="confirm_password">Confirm Password</label>
@@ -84,5 +84,6 @@
             else if (flag === 0)
                 location.href = "/editProfile"
         }
+
     </script>
 {% endblock %}

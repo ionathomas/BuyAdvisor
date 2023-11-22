@@ -73,7 +73,11 @@ def getProductDescription(asin):
     flag = 0
 
     if res['status'] == 'OK' and res['data'] != {} and res['data']['product_description']:
-        return res['data']['product_description']
+        des = res['data']['product_description']
+        des = des.split(".")
+        des = des.replace('"', '\"')
+        des = des.replace("'", "\"")
+        return des[0] + " " + des[1]
     else:
         return "Description not found"
 
@@ -258,7 +262,7 @@ def reviewProduct(urlPage):
                         if not result:
                             print("Error adding into productsearchlogs")
                         else:
-                            query = "INSERT INTO analyseproductscores(ASIN, Pos, Neg, HighestCategory, HighestCategoryPercentage, NumberOfReviewsAnalysed, DateAnalysed) VALUES ('"+asin+"'," +str(scores[0])+ "," +str(scores[1])+ ",'NEUTRAL', " + str(highScore) + ", " + str(numOfReviews) + ", '" + date + "')"
+                            query = "INSERT INTO analyseproductscores(ASIN, Pos, Neg, HighestCategory, HighestCategoryPercentage, NumberOfReviewsAnalysed, ProductDescription, DateAnalysed) VALUES ('"+asin+"'," +str(scores[0])+ "," +str(scores[1])+ ",'NEUTRAL', " + str(highScore) + ", " + str(numOfReviews) + ", '" + description + "', '"+ date + "')"
                             result2 = dbController.addRecord(query)
                             if not result2:
                                 print("Error updating into analyseproductscores")

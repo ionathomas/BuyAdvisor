@@ -101,7 +101,7 @@
             flag = 1;
         }
         else if(message.includes("The analysis was found to be non-conclusive.")){
-            document.getElementById("msg").innerHTML = message + " &#128521;";
+            document.getElementById("msg").innerHTML = message + "! &#128521;";
             document.getElementById("msg").style.color = "darkgreen";
             document.getElementById("msg").style.color = "darkgreen";
             document.getElementById("error_icon").style.color = "darkgreen";
@@ -142,7 +142,7 @@
             var id = setInterval(frame, 10);
             function frame() {
                 if (width >= maxWidth) {
-                    elem.innerHTML = maxWidth  + '% Negative';
+                    elem.innerHTML = maxWidth  + '% Positive';
                     clearInterval(id);
                 } else {
                     width++;

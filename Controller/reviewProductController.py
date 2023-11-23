@@ -5,6 +5,7 @@ import validators
 from datetime import datetime
 from transformers import pipeline
 from flask import redirect, url_for, flash, session
+from bs4 import BeautifulSoup
 
 from Controller import dbController
 
@@ -56,30 +57,21 @@ def scrapReviews(asin):
     else:
         return []
 
-
 def getProductDescription(asin):
 
-    url = "https://real-time-amazon-data.p.rapidapi.com/product-details"
-
-    querystring = {"asin": asin, "country": "US"}
-
-    headers = {
-        "X-RapidAPI-Key": "4f379d1851msh6ea897038188405p1667ddjsnba6c97df884b",
-        "X-RapidAPI-Host": "real-time-amazon-data.p.rapidapi.com"
-    }
-
-    response = requests.get(url, headers=headers, params=querystring)
-    res = response.json()
-    flag = 0
-
-    if res['status'] == 'OK' and res['data'] != {} and res['data']['product_description']:
-        des = res['data']['product_description']
-        des = des.split(".")
-        des = des.replace('"', '\"')
-        des = des.replace("'", "\"")
-        return des[0] + " " + des[1]
-    else:
-        return "Description not found"
+    HEADERS = ({'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit / 537.36(KHTML, like Gecko)'
+                             'Chrome / 44.0.2403.157 Safari / 537.36', 'Accept-Language': 'en-US, en;q=0.5'})
+    webpage = requests.get("https://www.amazon.com/dp/"+asin, headers=HEADERS)
+    soup = BeautifulSoup(webpage.content, "lxml")
+    try:
+        title = soup.find("span", attrs={"id": 'productTitle'})
+        title_value = title.string
+        title_string = title_value.strip().replace(',', '')
+        title_string = title_string.replace('"', '')
+        title_string = title_string.replace("'", "")
+    except AttributeError:
+        title_string = "N/A"
+    return title_string
 
 
 def analyzeReviews(reviews):
@@ -173,6 +165,7 @@ def reviewProduct(urlPage):
                         message = "The analysis was found to be non-conclusive. Let your instincts take the wheel on this one"
                         flash(message, 'Error')
                         print(message)
+                        return redirect(url_for("reviewProduct"))
                 else:
                     # Scrap Reviews using API
                     try:
@@ -184,6 +177,7 @@ def reviewProduct(urlPage):
                             message = "The number of reviews are not sufficient for analysis"
                             flash(message, 'Error')
                             print(message)
+                            return redirect(url_for("reviewProduct"))
                     except:
                         message = "The analysis was could not be processed. Uncaught Exception. Try analyzing another product from amazon.com."
                         flash(message, 'Error')
@@ -232,10 +226,12 @@ def reviewProduct(urlPage):
                         message = "The number of reviews are not sufficient for analysis"
                         flash(message, 'Error')
                         print(message)
+                        return redirect(url_for("reviewProduct"))
                 except:
                     message = "The analysis was could not be processed. Uncaught Exception. Try analyzing another URL."
                     flash(message, 'Error')
                     print(message)
+                    return redirect(url_for("reviewProduct"))
                 else:
                     now = datetime.now()
                     date = now.strftime('%Y-%m-%d %H:%M:%S')

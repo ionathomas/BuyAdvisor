@@ -20,8 +20,8 @@
             <thead>
                 <tr>
                     <th style="text-align:center;">ASIN</th>
+                    <th style="text-align:center;">Name</th>
                     <th style="text-align:center;">Review</th>
-                    <th style="text-align:center;">Description</th>
                     <th style="text-align:center;">URL</th>
                 </tr>
             </thead>
@@ -91,6 +91,7 @@
             message2 = message2.replaceAll("&lt;","<");
             message2 = message2.replaceAll("&gt;",">");
             message2 = message2.replaceAll("&quote;","\"");
+            message2 = message2.replaceAll("the wheel on this one! ","the wheel on this one! &#128521;")
             document.getElementById("tableBody").innerHTML = message2;
             flag = 0;
         }

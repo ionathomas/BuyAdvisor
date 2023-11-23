@@ -48,11 +48,14 @@ def editUserEmail(email):
 def updateEmail(request):
     query = "UPDATE User SET email = '" + request.form['userEmailId'] + "' WHERE email = '" + request.form['originalEmail'] +"'"
     result = dbController.editRecord(query)
-    if result:
+    query = "UPDATE productsearchlogs SET email = '" + request.form['userEmailId'] + "' WHERE email = '" + request.form[
+        'originalEmail'] + "'"
+    result2 = dbController.editRecord(query)
+    if result and result2:
         message = "Email successfully updated"
         flash(message, 'Success')
     else:
-        message = "Error while updating email. Please try again later."
+        message = "Error while updating email. (Can be an incomplete update, Check DB). Please try again later."
         flash(message, 'Error')
     return redirect(url_for("editEmail"))
 
@@ -70,15 +73,15 @@ def searchHistory(email):
                 scorePercentage = result2[0][4]
                 description = result2[0][6]
                 message = '<tr><td>' + asin[0] + '</td>'
+                message += '<td><a onclick="displayModal(\'' + description + '\')"><i class="fa fa-edit" style="font-size:36px"></i></a></td>'
                 if 'NEUTRAL' in scoreValue:
-                    message += '<td>The analysis was found to be non-conclusive. Let your instincts take the wheel on this one</td>'
+                    message += '<td>The analysis was found to be non-conclusive. <br> Let your instincts take the wheel on this one! </td>'
                 else:
                     message += '<td>The product was found to be ' + str(scorePercentage) + '% ' + scoreValue + '</td>'
-                message += '<td><a onclick="displayModal(\'' + description + '\')"><i class="fa fa-edit" style="font-size:36px"></i></a></td>'
+                #message += '<td><a onclick="displayModal(\'' + description + '\')"><i class="fa fa-edit" style="font-size:36px"></i></a></td>'
                 message += '<td><a onclick="displayModal(\'https://www.amazon.com/dp/' + asin[
                     0] + '\')"><i class="fa fa-link" style="font-size:36px"></i></a></td>'
                 message += '</tr>'
-                print(message)
                 flash(message, "Info")
     else:
         # No Search Results

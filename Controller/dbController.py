@@ -3,11 +3,13 @@ import pymysql
 global db
 
 
+# Function to open connection to DB
 def openDbConnection(dbConnection):
     global db
     db = dbConnection
 
 
+# Function to query the DB
 def queryDB(query):
     global db
     with db.cursor() as cursor:
@@ -22,6 +24,7 @@ def queryDB(query):
             return 0, 0
 
 
+# Insert Query Function
 def addRecord(query):
     sql_exec, cursor = queryDB(query)
     if sql_exec:
@@ -34,6 +37,7 @@ def addRecord(query):
         return False
 
 
+# Reading from the Table Function
 def getRecords(query):
     sql_exec, cursor = queryDB(query)
     if sql_exec:
@@ -47,6 +51,7 @@ def getRecords(query):
         return []
 
 
+# Update Query Function
 def editRecord(query):
     sql_exec, cursor = queryDB(query)
     if sql_exec:
@@ -59,6 +64,7 @@ def editRecord(query):
         return False
 
 
+# Delete Query Funtion
 def deleteRecord(query):
     sql_exec, cursor = queryDB(query)
     if sql_exec:
@@ -71,6 +77,7 @@ def deleteRecord(query):
         return False
 
 
+# Close the DB table connection
 def closeDbConnection():
     global db
     db.close()

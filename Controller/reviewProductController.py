@@ -82,7 +82,7 @@ def getProductTitle(asin):
 # Function to analyze the reviews scrapped
 def analyzeReviews(reviews):
     score = {'POS': 0, 'NEG': 0}
-    classification = pipeline('sentiment-analysis')
+    classification = pipeline('sentiment-analysis', model="distilbert-base-uncased-finetuned-sst-2-english")
     result = classification(reviews)
     for i in result:
         match i['label']:

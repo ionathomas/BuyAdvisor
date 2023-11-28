@@ -5,10 +5,11 @@ from Controller import mainController, userController, dbController, reviewProdu
 from password_hashing import encrypt
 
 app = Flask(__name__)
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'BuyAdvisor'
+app.config['MYSQL_HOST'] = 'buyadvisordb.ctyxfzfytuey.us-east-1.rds.amazonaws.com'
+app.config['MYSQL_USER'] = 'admin'
+app.config['MYSQL_PASSWORD'] = 'buyadvisor'
+app.config['MYSQL_DB'] = 'buyadvisor'
+app.config['PORT'] = 3306
 app.config['autocommit'] = True
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -23,6 +24,7 @@ db = pymysql.connect(
     user=app.config['MYSQL_USER'],
     password=app.config['MYSQL_PASSWORD'],
     db=app.config['MYSQL_DB'],
+    port=app.config['PORT'],
     autocommit=app.config['autocommit']
 )
 dbController.openDbConnection(db)

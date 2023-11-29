@@ -1,12 +1,12 @@
 import pytest
 
-from application import application
+from app import app
 
 
 @pytest.fixture
 def client():
-    application.testing = True
-    with application.test_client() as client:
+    app.testing = True
+    with app.test_client() as client:
         yield client
 
 

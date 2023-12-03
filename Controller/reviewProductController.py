@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 from Controller import dbController
 
 
+# Function to extract the ASIN number of an amazon product
 def extractAsin(url):
     idx = re.search("/dp/", url)
     if not idx:
@@ -20,6 +21,7 @@ def extractAsin(url):
     return asin
 
 
+# Function to check if the url enterred by the user is valid or not
 def validURLCheck(url):
     if "https://www" not in url:
         url = "https://" + url
@@ -29,6 +31,7 @@ def validURLCheck(url):
         return False
 
 
+# Function to Scrap the reviews from amazon using RAPID API
 def scrapReviews(asin):
     reviews = []
     url = "https://real-time-amazon-data.p.rapidapi.com/product-reviews"
@@ -57,7 +60,9 @@ def scrapReviews(asin):
     else:
         return []
 
-def getProductDescription(asin):
+
+# Function to get the Product Title with the help of the asin extracted
+def getProductTitle(asin):
 
     HEADERS = ({'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit / 537.36(KHTML, like Gecko)'
                              'Chrome / 44.0.2403.157 Safari / 537.36', 'Accept-Language': 'en-US, en;q=0.5'})
@@ -74,9 +79,10 @@ def getProductDescription(asin):
     return title_string
 
 
+# Function to analyze the reviews scrapped
 def analyzeReviews(reviews):
     score = {'POS': 0, 'NEG': 0}
-    classification = pipeline('sentiment-analysis')
+    classification = pipeline('sentiment-analysis', model="distilbert-base-uncased-finetuned-sst-2-english")
     result = classification(reviews)
     for i in result:
         match i['label']:
@@ -99,6 +105,8 @@ def analyzeReviews(reviews):
     score['NEG'] = 100 - score['POS']
     return [highScorePosition, highScore, len(reviews), [score['POS'], score['NEG']]]
 
+
+# Funtion to check if the percentage of positive and negative reviews are the same or not
 def scoreListCheck(scores):
     scoreList = list(dict.fromkeys(scores))
     if len(scoreList) == 1:
@@ -106,10 +114,14 @@ def scoreListCheck(scores):
     else:
         return True
 
+
+# Function to insert the search logs into productsearchlogs table
 def insertIntoLogs(email, asin, date):
     query = "INSERT INTO productsearchlogs(email, ASIN, dateSearched) VALUES ('" + email + "', '" + asin + "', '" + date + "')"
     return dbController.addRecord(query)
 
+
+# Function to get the score value of the highest position
 def getScoreValue(highestScorePosition):
     match highestScorePosition:
         case 'POS':
@@ -117,9 +129,12 @@ def getScoreValue(highestScorePosition):
         case 'NEG':
             return 'Negative'
 
+
+# Main function that deals with the process of scraping reviews, analysing them and displaying the results.
 def reviewProduct(urlPage):
     # Validity check of the URL entered by the user
     if validURLCheck(urlPage):
+
         # Extract ASIN
         asin = extractAsin(urlPage)
         print(asin)
@@ -142,6 +157,9 @@ def reviewProduct(urlPage):
                 d2 = datetime.strptime(date2, "%Y-%m-%d %H:%M:%S")
                 delta = d2 - d1
 
+                # If the product was found in the DB, checking if they were reviewed in less than 15 days
+                # If less than 15 days, display as is
+                # If 15 days or more, scrap and analyse reviews and display the results
                 if delta.days < 15:
                     scoreValue = result[0][3]
                     highScore = result[0][4]
@@ -149,6 +167,8 @@ def reviewProduct(urlPage):
                     scores = [result[0][1], result[0][2]]
                     if scoreListCheck(scores):
                         print(scores)
+
+                        # Adding logs and notifying the user the result of the analysis
                         result = insertIntoLogs(session['email'], asin, date2)
                         if not result:
                             print("Error adding into productsearchlogs")
@@ -159,6 +179,8 @@ def reviewProduct(urlPage):
                         flash(scoreMessage, 'Info')
                     else:
                         print(scores)
+
+                        # Adding logs and notifying the user the result of the analysis
                         result = insertIntoLogs(session['email'],asin,date2)
                         if not result:
                             print("Error adding into productsearchlogs")
@@ -167,6 +189,7 @@ def reviewProduct(urlPage):
                         print(message)
                         return redirect(url_for("reviewProduct"))
                 else:
+
                     # Scrap Reviews using API
                     try:
                         reviews = scrapReviews(asin)
@@ -183,9 +206,14 @@ def reviewProduct(urlPage):
                         flash(message, 'Error')
                         print(message)
                     else:
+
+                        # Since the product is already in the table, the scores are just updated using the UPDATE query
                         scoreValue = getScoreValue(highestScorePosition)
+
                         if scoreListCheck(scores):
                             print(scores)
+
+                            # Adding logs and notifying the user the result of the analysis
                             result = insertIntoLogs(session['email'], asin, date2)
                             if result:
                                 query = "UPDATE analyseproductscores SET Pos = " +str(scores[0])+ ", Neg = " +str(scores[1])+ ", HighestCategory = '" +scoreValue+ "' ,HighestCategoryPercentage = " +str(highScore)+ ", NumberOfReviewsAnalysed = " +str(numOfReviews)+ ", DateAnalysed = '" +date2+ "' WHERE ASIN = '" + asin + "'"
@@ -201,6 +229,8 @@ def reviewProduct(urlPage):
                             flash(scoreMessage, 'Info')
                         else:
                             print(scores)
+
+                            # Adding logs and notifying the user the result of the analysis
                             result = insertIntoLogs(session['email'], asin, date2)
                             if not result:
                                 print("Error adding into productsearchlogs")
@@ -215,10 +245,13 @@ def reviewProduct(urlPage):
                             message = "The analysis was found to be non-conclusive. Let your instincts take the wheel on this one"
                             flash(message, 'Error')
                             print(message)
+
+            # If the product is not found in the analyseproductscores table
+            # Scraping and analysing the reviews
             else:
                 try:
                     reviews = scrapReviews(asin)
-                    description = getProductDescription(asin)
+                    description = getProductTitle(asin)
                     if len(reviews) >= 10:
                         # Analyze Reviews using ML model
                         [highestScorePosition, highScore, numOfReviews, scores] = analyzeReviews(reviews)
@@ -233,11 +266,14 @@ def reviewProduct(urlPage):
                     print(message)
                     return redirect(url_for("reviewProduct"))
                 else:
+
                     now = datetime.now()
                     date = now.strftime('%Y-%m-%d %H:%M:%S')
                     scoreValue = getScoreValue(highestScorePosition)
                     if scoreListCheck(scores):
                         print(scores)
+
+                        # Adding logs and notifying the user the result of the analysis
                         result = insertIntoLogs(session['email'], asin, date)
                         if result:
                             query = "INSERT INTO analyseproductscores(ASIN, Pos, Neg, HighestCategory, HighestCategoryPercentage, NumberOfReviewsAnalysed, ProductDescription, DateAnalysed) VALUES ('"+asin+"'," +str(scores[0])+ "," +str(scores[1])+ ",'" + scoreValue + "', " + str(highScore) + ", " + str(numOfReviews) + ", '" + description + "', '" + date + "')"
@@ -254,6 +290,7 @@ def reviewProduct(urlPage):
                         flash(scoreMessage, 'Info')
                     else:
                         print(scores)
+                        # Adding logs and notifying the user the result of the analysis
                         result = insertIntoLogs(session['email'], asin, date)
                         if not result:
                             print("Error adding into productsearchlogs")
@@ -266,6 +303,7 @@ def reviewProduct(urlPage):
                         flash(message, 'Error')
                         print(message)
 
+    # Notifying the user if the URL enterred was not from amazon.com or if it was not a valid url
     else:
         if "www.amazon" in urlPage:
             message = "This is not a product from the US store. Please paste a URL from the US store"

@@ -1,14 +1,15 @@
 import pymysql
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_session import Session
 from Controller import mainController, userController, dbController, reviewProductController, adminController
 from password_hashing import encrypt
 
 app = Flask(__name__)
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'BuyAdvisor'
+app.config['MYSQL_HOST'] = 'buyadvisordb.ctyxfzfytuey.us-east-1.rds.amazonaws.com'
+app.config['MYSQL_USER'] = 'admin'
+app.config['MYSQL_PASSWORD'] = 'buyadvisor'
+app.config['MYSQL_DB'] = 'buyadvisor'
+app.config['PORT'] = 3306
 app.config['autocommit'] = True
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -23,9 +24,19 @@ db = pymysql.connect(
     user=app.config['MYSQL_USER'],
     password=app.config['MYSQL_PASSWORD'],
     db=app.config['MYSQL_DB'],
+    port=app.config['PORT'],
     autocommit=app.config['autocommit']
 )
 dbController.openDbConnection(db)
+
+
+def sessionCheck():
+    try:
+        if session['email'] is None or 'email' not in session:
+            return False
+    except:
+        return False
+    return True
 
 
 @app.route("/")
@@ -54,26 +65,34 @@ def signOut():
     return redirect("/")
 
 
-#User Functions
+# User Functions
 @app.route("/dashboard")
 def dashboard():
+    if not sessionCheck():
+        return redirect("/")
     return reviewProduct()
 
 
 @app.route("/editProfile", methods=['GET', 'POST'])
 def editProfile():
+    if not sessionCheck():
+        return redirect("/")
     userController.editProfile(request)
     return render_template("editProfile.html")
 
 
 @app.route("/searchHistory", methods=['GET', 'POST'])
 def searchHistory():
+    if not sessionCheck():
+        return redirect("/")
     userController.searchHistory()
     return render_template("searchHistory.html")
 
 
 @app.route("/reviewProduct", methods=['GET', 'POST'])
 def reviewProduct():
+    if not sessionCheck():
+        return redirect("/")
     url = request.values.get('url')
     if url:
         print(url)
@@ -81,20 +100,26 @@ def reviewProduct():
     return render_template("reviewProduct.html")
 
 
-#Admin Functions
+# Admin Functions
 @app.route("/adminDashboard")
 def adminDashboard():
-    return viewUsers();
+    if not sessionCheck():
+        return redirect("/")
+    return viewUsers()
 
 
 @app.route("/viewUsers")
 def viewUsers():
+    if not sessionCheck():
+        return redirect("/")
     adminController.viewUsers()
     return render_template("viewUsers.html")
 
 
 @app.route("/deleteUser", methods=['POST'])
 def deleteUser():
+    if not sessionCheck():
+        return redirect("/")
     if request.method == 'POST':
         adminController.deleteUser(request.form['email'])
     return redirect(url_for("viewUsers"))
@@ -102,6 +127,8 @@ def deleteUser():
 
 @app.route("/editEmail", methods=['GET', 'POST'])
 def editEmail():
+    if not sessionCheck():
+        return redirect("/")
     if request.method == 'GET':
         adminController.editUserEmail(request.args.get('email'))
     elif request.method == 'POST':
@@ -111,6 +138,8 @@ def editEmail():
 
 @app.route("/userSearchHistory", methods=['POST'])
 def userSearchHistory():
+    if not sessionCheck():
+        return redirect("/")
     if request.method == 'POST':
         adminController.searchHistory(request.form['email'])
     return render_template("userSearchHistory.html")
@@ -124,7 +153,4 @@ def add_header(response):
 
 if __name__ == '__main__':
     dbController.openDbConnection(db)
-    app.run(static_url_path='/',
-            static_folder='BuyAdvisor/static',
-            template_folder='BuyAdvisor/templates',
-            debug=True)
+    app.run()

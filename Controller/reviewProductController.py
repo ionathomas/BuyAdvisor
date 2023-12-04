@@ -100,6 +100,7 @@ def analyzeReviews(reviews):
     for i in reviews:
         if len(i.split()) <= 450:
             cleanUpReviews.append(i)
+    print(cleanUpReviews)
     result = classifyReviews({
         "inputs": cleanUpReviews
     })

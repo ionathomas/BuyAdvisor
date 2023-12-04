@@ -79,13 +79,32 @@ def getProductTitle(asin):
     return title_string
 
 
+# Function to classify reviews
+def classifyReviews(payload):
+    API_URL = "https://api-inference.huggingface.co/models/distilbert-base-uncased-finetuned-sst-2-english"
+    headers = {"Authorization": "Bearer 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"}
+
+    response = requests.post(API_URL, headers=headers, json=payload)
+    reviewsClassified = response.json()
+    result=[]
+    for i in reviewsClassified:
+        result.append(i[0]['label'])
+    print(result)
+    return result
+
+
 # Function to analyze the reviews scrapped
 def analyzeReviews(reviews):
     score = {'POS': 0, 'NEG': 0}
-    classification = pipeline('sentiment-analysis', model="distilbert-base-uncased-finetuned-sst-2-english")
-    result = classification(reviews)
+    cleanUpReviews = []
+    for i in reviews:
+        if len(i.split()) <= 450:
+            cleanUpReviews.append(i)
+    result = classifyReviews({
+        "inputs": cleanUpReviews
+    })
     for i in result:
-        match i['label']:
+        match i:
             case 'POSITIVE':
                 score['POS'] += 1
             case 'NEGATIVE':

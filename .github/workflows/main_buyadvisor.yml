@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'BuyAdvisor'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_40196E4833CF48A3A0CF7A91110844C1 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_18AF9774051344A48E5813D75E3ED21F }}

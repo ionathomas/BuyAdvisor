@@ -64,17 +64,21 @@ def scrapReviews(asin):
 # Function to get the Product Title with the help of the asin extracted
 def getProductTitle(asin):
 
-    HEADERS = ({'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit / 537.36(KHTML, like Gecko)'
-                             'Chrome / 44.0.2403.157 Safari / 537.36', 'Accept-Language': 'en-US, en;q=0.5'})
-    webpage = requests.get("https://www.amazon.com/dp/"+asin, headers=HEADERS)
-    soup = BeautifulSoup(webpage.content, "lxml")
+    url = "https://axesso-axesso-amazon-data-service-v1.p.rapidapi.com/amz/amazon-lookup-product"
+
+    querystring = {"url": "https://www.amazon.com/dp/"+asin}
+
+    headers = {
+        "X-RapidAPI-Key": "4f379d1851msh6ea897038188405p1667ddjsnba6c97df884b",
+        "X-RapidAPI-Host": "axesso-axesso-amazon-data-service-v1.p.rapidapi.com"
+    }
     try:
-        title = soup.find("span", attrs={"id": 'productTitle'})
-        title_value = title.string
+        response = requests.get(url, headers=headers, params=querystring)
+        title_value = response.json()['productTitle']
         title_string = title_value.strip().replace(',', '')
         title_string = title_string.replace('"', '')
         title_string = title_string.replace("'", "")
-    except AttributeError:
+    except:
         title_string = "N/A"
     return title_string
 
@@ -270,8 +274,8 @@ def reviewProduct(urlPage):
             # If the product is not found in the analyseproductscores table
             # Scraping and analysing the reviews
             else:
-                description = "NA"
-                #getProductTitle(asin)
+                description = getProductTitle(asin)
+                print(description)
                 try:
                     reviews = scrapReviews(asin)
                     if len(reviews) >= 10:

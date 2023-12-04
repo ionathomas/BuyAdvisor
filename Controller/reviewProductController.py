@@ -224,6 +224,7 @@ def reviewProduct(urlPage):
                     except:
                         message = "The analysis was could not be processed. Uncaught Exception. Try analyzing another product from amazon.com."
                         flash(message, 'Error')
+                        print("Unable to use RapidAPI")
                         print(message)
                     else:
 

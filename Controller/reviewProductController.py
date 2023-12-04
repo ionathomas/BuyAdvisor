@@ -6,6 +6,7 @@ from datetime import datetime
 from transformers import pipeline
 from flask import redirect, url_for, flash, session
 from bs4 import BeautifulSoup
+import os
 
 from Controller import dbController
 
@@ -37,7 +38,7 @@ def scrapReviews(asin):
     url = "https://real-time-amazon-data.p.rapidapi.com/product-reviews"
 
     headers = {
-        "X-RapidAPI-Key": "4f379d1851msh6ea897038188405p1667ddjsnba6c97df884b",
+        "X-RapidAPI-Key": os.getenv("X-RapidAPI-Key"),
         "X-RapidAPI-Host": "real-time-amazon-data.p.rapidapi.com"
     }
 
@@ -82,7 +83,7 @@ def getProductTitle(asin):
 # Function to classify reviews
 def classifyReviews(payload):
     API_URL = "https://api-inference.huggingface.co/models/distilbert-base-uncased-finetuned-sst-2-english"
-    headers = {"Authorization": "Bearer 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"}
+    headers = {"Authorization": os.getenv("Authorization")}
 
     response = requests.post(API_URL, headers=headers, json=payload)
     reviewsClassified = response.json()

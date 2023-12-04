@@ -270,7 +270,8 @@ def reviewProduct(urlPage):
             # If the product is not found in the analyseproductscores table
             # Scraping and analysing the reviews
             else:
-                description = getProductTitle(asin)
+                description = "NA"
+                #getProductTitle(asin)
                 try:
                     reviews = scrapReviews(asin)
                     if len(reviews) >= 10:

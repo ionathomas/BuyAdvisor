@@ -270,9 +270,9 @@ def reviewProduct(urlPage):
             # If the product is not found in the analyseproductscores table
             # Scraping and analysing the reviews
             else:
+                description = getProductTitle(asin)
                 try:
                     reviews = scrapReviews(asin)
-                    description = getProductTitle(asin)
                     if len(reviews) >= 10:
                         # Analyze Reviews using ML model
                         [highestScorePosition, highScore, numOfReviews, scores] = analyzeReviews(reviews)
@@ -285,6 +285,7 @@ def reviewProduct(urlPage):
                     message = "The analysis was could not be processed. Uncaught Exception. Try analyzing another URL."
                     flash(message, 'Error')
                     print(message)
+                    print("Unable to fetch RapidAPI")
                     return redirect(url_for("reviewProduct"))
                 else:
 
